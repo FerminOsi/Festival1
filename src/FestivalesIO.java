@@ -1,8 +1,9 @@
 
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Scanner;
+import java.text.DateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 /**
  * La clase contiene méodos estáticos que permiten
@@ -38,12 +39,24 @@ public class FestivalesIO {
      * @return el festival creado
      */
     public static Festival parsearLinea(String lineaFestival) {
-       //TODO
-        
-        return null;
+        String nombre;
+        String lugar;
+        LocalDate fechaIni = null;
+        int duracion = 0;
+        HashSet<Estilo> estilos = new HashSet<>();
+
+        String[] festival = lineaFestival.split(":");
+
+        nombre = festival[0].trim();
+        lugar = festival[1].trim();
+        fechaIni = LocalDate.parse(festival[2].trim(), DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+        duracion = Integer.parseInt(festival[3].trim());
+
+                String[] estilosTexto = festival[4].split(":");
+                for (String estilotexto : estilosTexto) {
+                    Estilo miEstilo = Estilo.valueOf(estilotexto.trim().toUpperCase());
+                    estilos.add(miEstilo);
+                }
+        return new Festival(nombre, lugar, fechaIni, duracion, estilos);
     }
-    
-   
-    
-    
 }
