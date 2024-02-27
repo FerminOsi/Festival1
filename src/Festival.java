@@ -108,7 +108,20 @@ public class Festival {
         StringBuilder sb = new StringBuilder();
         LocalDate fechaActual = LocalDate.now();
         String fechaInicioFormateada = this.fechaInicio.format(DateTimeFormatter.ofPattern("dd MMM. uuuu"));
-        long diasRestantes = ChronoUnit.DAYS.between(fechaActual,fechaInicio);
+        LocalDate fechafin = fechaInicio.plusDays(duracion);
+
+        if(duracion = 1){
+            System.out.println();
+        }
+        if (fechaActual.isBefore(fechaInicio)){
+            long diasRestantes = ChronoUnit.DAYS.between(fechaActual,fechaInicio);
+        }else if (fechaActual.isAfter(fechaInicio) && fechaActual.isBefore(fechafin)){
+            System.out.println("ON");
+        }else {
+            System.out.println("concluido");
+        }
+
+
         sb.append(this.nombre).append("\t\t ").append(estilos).append("\n").append(lugar).append("\n");
 
         return null;
