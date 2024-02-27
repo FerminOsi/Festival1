@@ -1,5 +1,9 @@
 
 import java.time.LocalDate;
+import java.time.Period;
+import java.time.chrono.ChronoLocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.HashSet;
 
 /**
@@ -18,8 +22,7 @@ public class Festival {
     private final HashSet<Estilo> estilos;
     
     
-    public Festival(String nombre, String lugar, LocalDate fechaInicio,
-                    int duracion, HashSet<Estilo> estilos) {
+    public Festival(String nombre, String lugar, LocalDate fechaInicio, int duracion, HashSet<Estilo> estilos) {
         this.nombre = nombre;
         this.lugar = lugar;
         this.fechaInicio = fechaInicio;
@@ -59,10 +62,8 @@ public class Festival {
      *
      */
     public Mes getMes() {
-        //TODO
-        
-        return null;
-        
+
+        return Mes.values()[fechaInicio.getMonthValue() - 1];
     }
 
     /**
@@ -72,10 +73,8 @@ public class Festival {
      * en un fecha anterior a otro
      */
     public boolean empiezaAntesQue(Festival otro) {
-        //TODO
-        
-        return true;
-        
+
+        return this.fechaInicio.isBefore(otro.fechaInicio);
     }
 
     /**
@@ -85,10 +84,8 @@ public class Festival {
      * en un fecha posteior a otro
      */
     public boolean empiezaDespuesQue(Festival otro) {
-        //TODO
-        
-        return true;
-        
+
+        return this.fechaInicio.isAfter(otro.fechaInicio);
     }
 
     /**
@@ -96,12 +93,11 @@ public class Festival {
      * @return true si el festival ya ha concluido
      */
     public boolean haConcluido() {
-        //TODO
-        
-        return true;
 
+         LocalDate fechaFin = this.fechaInicio.plusDays(this.duracion);
+         LocalDate fechaActual =  LocalDate.now();
+         return fechaActual.isAfter(fechaFin);
     }
-
     /**
      * Representación textual del festival, exactamente
      * como se indica en el enunciado
@@ -109,8 +105,12 @@ public class Festival {
      */
     @Override
     public String toString() {
-       //TODO
-        
+        StringBuilder sb = new StringBuilder();
+        LocalDate fechaActual = LocalDate.now();
+        String fechaInicioFormateada = this.fechaInicio.format(DateTimeFormatter.ofPattern("dd MMM. uuuu"));
+        long diasRestantes = ChronoUnit.DAYS.between(fechaActual,fechaInicio);
+        sb.append(this.nombre).append("\t\t ").append(estilos).append("\n").append(lugar).append("\n");
+
         return null;
         
     }
