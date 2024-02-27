@@ -109,7 +109,8 @@ public class Festival {
         LocalDate fechaActual = LocalDate.now();
         String fechaInicioFormateada = this.fechaInicio.format(DateTimeFormatter.ofPattern("dd MMM. uuuu"));
         long diasRestantes = ChronoUnit.DAYS.between(fechaActual,fechaInicio);
-        sb.append(this.nombre).append("\t\t ").append(estilos).append("\n").append(lugar).append("\n");AYe
+        sb.append(this.nombre).append("\t\t ").append(estilos).append("\n").append(lugar).append("\n");
+
         return null;
         
     }
