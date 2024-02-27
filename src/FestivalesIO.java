@@ -61,10 +61,9 @@ public class FestivalesIO {
         fechaIni = LocalDate.parse(festival[2].trim(), DateTimeFormatter.ofPattern("dd-MM-yyyy"));
         duracion = Integer.parseInt(festival[3].trim());
 
-        String[] estilosTexto = festival[4].split(":");
-                for (String estilotexto : estilosTexto) {
-                    Estilo miEstilo = Estilo.valueOf(estilotexto.trim().toUpperCase());
-                    estilos.add(miEstilo);
+                for (int i = 4; i < festival.length; i++){
+                    String estilosTexto = festival[i].trim().toUpperCase();
+                    estilos.add(Estilo.valueOf(estilosTexto.trim().toUpperCase()));
                 }
         return new Festival(nombre, lugar, fechaIni, duracion, estilos);
     }

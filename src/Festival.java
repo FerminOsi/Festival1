@@ -20,46 +20,45 @@ public class Festival {
     private final LocalDate fechaInicio;
     private final int duracion;
     private final HashSet<Estilo> estilos;
-    
-    
+
+
     public Festival(String nombre, String lugar, LocalDate fechaInicio, int duracion, HashSet<Estilo> estilos) {
         this.nombre = nombre;
         this.lugar = lugar;
         this.fechaInicio = fechaInicio;
         this.duracion = duracion;
         this.estilos = estilos;
-        
+
     }
-    
+
     public String getNombre() {
         return nombre;
     }
-    
+
     public String getLugar() {
         return lugar;
     }
-    
+
     public LocalDate getFechaInicio() {
         return fechaInicio;
     }
-    
+
     public int getDuracion() {
         return duracion;
     }
-    
+
     public HashSet<Estilo> getEstilos() {
         return estilos;
     }
-    
+
     public void addEstilo(Estilo estilo) {
         this.estilos.add(estilo);
-        
+
     }
 
     /**
      * devuelve el mes de celebración del festival, como
      * valor enumerado
-     *
      */
     public Mes getMes() {
 
@@ -67,7 +66,6 @@ public class Festival {
     }
 
     /**
-     *
      * @param otro
      * @return true si el festival actual empieza
      * en un fecha anterior a otro
@@ -78,7 +76,6 @@ public class Festival {
     }
 
     /**
-     *
      * @param otro
      * @return true si el festival actual empieza
      * en un fecha posteior a otro
@@ -89,45 +86,44 @@ public class Festival {
     }
 
     /**
-     *
      * @return true si el festival ya ha concluido
      */
     public boolean haConcluido() {
 
-         LocalDate fechaFin = this.fechaInicio.plusDays(this.duracion);
-         LocalDate fechaActual =  LocalDate.now();
-         return fechaActual.isAfter(fechaFin);
+        LocalDate fechaFin = this.fechaInicio.plusDays(this.duracion);
+        LocalDate fechaActual = LocalDate.now();
+        return fechaActual.isAfter(fechaFin);
     }
+
     /**
      * Representación textual del festival, exactamente
      * como se indica en el enunciado
-     *
      */
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
+        sb.append(this.nombre).append("\t\t ").append(estilos).append("\n").append(lugar.toUpperCase()).append("\n");
         LocalDate fechaActual = LocalDate.now();
-        String fechaInicioFormateada = this.fechaInicio.format(DateTimeFormatter.ofPattern("dd MMM. uuuu"));
+        String fechaInicioFormateada = this.fechaInicio.format(DateTimeFormatter.ofPattern("dd MMM. yyyy"));
+        String fechaInicioFormateadaSinAno = this.fechaInicio.format(DateTimeFormatter.ofPattern("dd MMM."));
         LocalDate fechafin = fechaInicio.plusDays(duracion);
+        String fechaFinFormateada = fechafin.format(DateTimeFormatter.ofPattern("dd MMM. yyyy"));
 
-        if(duracion = 1){
-            System.out.println();
+
+        if (duracion == 1) {
+            sb.append(fechaInicioFormateada);
+        } else {
+            sb.append(fechaInicioFormateadaSinAno +" - " + fechaFinFormateada);
         }
-        if (fechaActual.isBefore(fechaInicio)){
-            long diasRestantes = ChronoUnit.DAYS.between(fechaActual,fechaInicio);
+        if (haConcluido()){
+            sb.append(" (concluido)");
         }else if (fechaActual.isAfter(fechaInicio) && fechaActual.isBefore(fechafin)){
-            System.out.println("ON");
+            sb.append("(ON)");
         }else {
-            System.out.println("concluido");
-        }
-
-
-        sb.append(this.nombre).append("\t\t ").append(estilos).append("\n").append(lugar).append("\n");
-
-        return null;
-        
+            sb.append(" (quedan " + ChronoUnit.DAYS.between(LocalDate.now(),fechaInicio) + " dias)");
+        }sb.append("\n----------------------------------------------------");
+        return sb.toString();
     }
-
     /**
      * Código para probar la clase Festival
      *
@@ -135,23 +131,23 @@ public class Festival {
     public static void main(String[] args) {
         System.out.println("Probando clase Festival");
         String datosFestival = "Gazpatxo Rock : " +
-                "valencia: 28-02-2022  :1  :rock" +
+                "valencia: 28-02-2024  :1  :rock" +
                 ":punk " +
                 ": hiphop ";
         Festival f1 = FestivalesIO.parsearLinea(datosFestival);
         System.out.println(f1);
         
-        datosFestival = "black sound fest:badajoz:05-02-2022:  21" +
+        datosFestival = "black sound fest:badajoz:05-02-2024:  21" +
                 ":rock" + ":  blues";
         Festival f2 = FestivalesIO.parsearLinea(datosFestival);
         System.out.println(f2);
     
-        datosFestival = "guitar bcn:barcelona: 28-01-2022 :  170" +
+        datosFestival = "guitar bcn:barcelona: 28-01-2024 :  170" +
                 ":indie" + ":pop:fusion";
         Festival f3 = FestivalesIO.parsearLinea(datosFestival);
         System.out.println(f3);
     
-        datosFestival = "  benidorm fest:benidorm:26-01-2022:3" +
+        datosFestival = "  benidorm fest:benidorm:26-01-2024:3" +
                 ":indie" + ": pop  :rock";
         Festival f4 = FestivalesIO.parsearLinea(datosFestival);
         System.out.println(f4);
@@ -172,8 +168,6 @@ public class Festival {
         System.out.println(f4.getNombre() + " ha concluido? " + f4.haConcluido());
         System.out.println(f1);
         System.out.println(f1.getNombre() + " ha concluido? " + f1.haConcluido());
- 
-        
-        
+
     }
 }
