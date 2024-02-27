@@ -47,12 +47,21 @@ public class FestivalesIO {
 
         String[] festival = lineaFestival.split(":");
 
+
         nombre = festival[0].trim();
-        lugar = festival[1].trim();
+        String [] palabras = nombre.split("\\s+");
+        StringBuilder nombreFormateado = new StringBuilder();
+        for (String palabra : palabras) {
+            if (!palabra.isEmpty()){
+                palabra = palabra.substring(0,1).toUpperCase() + palabra.substring(1).toLowerCase();
+            }
+            nombre = nombreFormateado.append(palabra).append(" ").toString().trim();
+        }
+        lugar = festival[1].trim().toUpperCase();
         fechaIni = LocalDate.parse(festival[2].trim(), DateTimeFormatter.ofPattern("dd-MM-yyyy"));
         duracion = Integer.parseInt(festival[3].trim());
 
-                String[] estilosTexto = festival[4].split(":");
+        String[] estilosTexto = festival[4].split(":");
                 for (String estilotexto : estilosTexto) {
                     Estilo miEstilo = Estilo.valueOf(estilotexto.trim().toUpperCase());
                     estilos.add(miEstilo);
